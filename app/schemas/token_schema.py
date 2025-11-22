@@ -15,3 +15,4 @@ class Token(BaseModel):
 # Schéma pour le JWT décodé (utilisé en interne par le système)
 class TokenData(BaseModel):
     username: Optional[str] = None
+

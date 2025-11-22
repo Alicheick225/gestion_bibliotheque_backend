@@ -119,8 +119,8 @@ async def get_current_active_user(
     # 2. Décodage du token pour obtenir les claims
     token_data = decode_access_token(token)
     
-    # 3. Récupération de l'utilisateur par son ID
-    user = user_repo.get_user_by_id(db, user_id=token_data.user_id)
+    # 3. Récupération de l'utilisateur par son username
+    user = user_repo.get_user_by_username(db, username=token_data.username)
     
     if user is None:
         raise HTTPException(

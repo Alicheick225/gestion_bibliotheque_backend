@@ -25,3 +25,8 @@ def get_user_by_username(db: Session, username: str) -> UtilisateurSys | None:
 def get_user_by_email(db: Session, email: str) -> UtilisateurSys | None:
     """ Récupère un utilisateur par son adresse e-mail. """
     return db.query(UtilisateurSys).filter(UtilisateurSys.email == email).first()
+
+
+def get_user_by_id(db: Session, user_id: int) -> UtilisateurSys | None:
+    """ Récupère un utilisateur par son ID. """
+    return db.query(UtilisateurSys).filter(UtilisateurSys.id == user_id).first()

@@ -45,6 +45,7 @@ class UtilisateurSys(Base):
     __tablename__ = 'utilisateur_sys'
     __table_args__ = (
         PrimaryKeyConstraint('id', name='utilisateur_sys_pkey'),
+        UniqueConstraint('email', name='unique_email'),
         UniqueConstraint('username', name='utilisateur_sys_username_key')
     )
 
@@ -52,9 +53,14 @@ class UtilisateurSys(Base):
     username: Mapped[str] = mapped_column(String(50), nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     est_actif: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=text('true'))
-    date_creation: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=False)
+    date_creation: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=False, server_default=text('now()'))
+    email: Mapped[str] = mapped_column(String(100), nullable=False)
+    nom: Mapped[str] = mapped_column(String(100), nullable=False)
+    prenoms: Mapped[str] = mapped_column(String(100), nullable=False)
     date_modification: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime)
     date_derniere_connexion: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime)
+    adresse: Mapped[Optional[str]] = mapped_column(String(255))
+    telephone: Mapped[Optional[str]] = mapped_column(String(20))
 
     document: Mapped[list['Document']] = relationship('Document', back_populates='utilisateur_creation')
     utilisateur_role: Mapped[list['UtilisateurRole']] = relationship('UtilisateurRole', back_populates='utilisateur_sys')

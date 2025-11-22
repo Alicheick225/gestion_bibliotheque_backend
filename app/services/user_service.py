@@ -14,14 +14,19 @@ def create_new_user(db: Session, user_data: UserCreate) -> UserRead:
     # Créer un dictionnaire pour le Repo, en remplaçant le mot de passe par la version hachée
     user_db_data = user_data.model_dump(exclude={"password"})
     user_db_data["password"] = hashed_password 
+
+    # 3. CONVERSION EN MODÈLE PYDANTIC AVANT L'ENVOI AU DÉPÔT
+    # Valide que le dictionnaire créé correspond au schéma de la base de données.
+    user_db_model = UserCreate(**user_db_data)
     
-    db_user = user_repo.create_user(db, user_db_data)
+    db_user = user_repo.create_user(db, user_db_model)
     
     return UserRead.model_validate(db_user)
 
 
-def authenticate_user(db: Session, email: str, password: str):
-    user = user_repo.get_user_by_email(db, email)
+
+def authenticate_user(db: Session, username: str, password: str):
+    user = user_repo.get_user_by_username(db, username)
     if not user:
         return None
         
