@@ -10,7 +10,7 @@ from app.schemas.document_schema import DocumentCreate, DocumentRead, DocumentUp
 from typing import List, Any
 
 
-router = APIRouter(prefix="/documents", tags=["documents"])
+router = APIRouter()
 
 # --- 1. GET / : Récupère tous les documents (PROTÉGÉ) ---
 @router.get("/", response_model=List[DocumentRead], summary="Récupère tous les documents (Protégé)")
